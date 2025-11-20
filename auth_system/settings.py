@@ -21,12 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kdi_gc=(xohqil8ysna*ht99q#j8wbd22fe6$espb*5kume0v-'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -51,11 +53,16 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/post-login/'  
+LOGIN_REDIRECT_URL = '/post-login/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'test@example.com'  
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "sarthakmc166@gmail.com"
+EMAIL_HOST_PASSWORD = "avrr arqe tlha bcgi"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 AUTHENTICATION_BACKENDS = [
@@ -80,7 +87,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "none"  # or "mandatory"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True         # set False if you want no username
 
@@ -88,6 +95,7 @@ ACCOUNT_USERNAME_REQUIRED = True         # set False if you want no username
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 MIDDLEWARE = [
