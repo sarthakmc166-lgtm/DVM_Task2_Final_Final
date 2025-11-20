@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Scanner</title>
+    <style>
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --accent:#6ee7b7;
+            --accent2:#7c6cff;
+            --muted:#9aa4b2;
+            --success:#22c55e;
+            --error:#ef4444;
+            --glass: rgba(255,255,255,0.04);
+            --radius:14px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(800px 600px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+                radial-gradient(500px 400px at 90% 90%, rgba(124,108,255,0.04), transparent 10%),
+                var(--bg);
+            color: #e6eef6;
+        }
+
+        .container {
+            width: 380px;
+            background: var(--card);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+            text-align: center;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: rgba(34,197,94,0.15);
+            color: var(--success);
+        }
+
+        .error {
+            background: rgba(239,68,68,0.15);
+            color: var(--error);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.04);
+            background: var(--glass);
+            color: #e6eef6;
+            font-size: 15px;
+            outline: none;
+            transition: box-shadow 0.18s, transform 0.12s;
+        }
+
+        input:focus, select:focus {
+            box-shadow: 0 6px 18px rgba(110,231,183,0.06);
+            transform: translateY(-1px);
+            border-color: rgba(110,231,183,0.24);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(124,108,255,0.15);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #052018;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(124,108,255,0.25);
+        }
+
+        .back-btn {
+            background: #555;
+            color: #fff;
+            margin-top: 12px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+            background: #333;
+        }
+
+        @media (max-width: 420px) {
+            .container { width: 90%; padding:28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎫 Ticket Scanner</h2>
+
+        <!-- Django messages -->
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="message {% if msg.tags == 'success' %}success{% else %}error{% endif %}">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="ticket_id" placeholder="Enter Ticket ID" required>
+
+            <input type="text" name="current_station" placeholder="Enter your current station" required>
+
+            <button type="submit">Scan Ticket</button>
+        </form>
+
+        <form action="{% url 'menu' %}">
+            <button class="back-btn">⬅ Back to Menu</button>
+        </form>
+    </div>
+</body>
+</html>

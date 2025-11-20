@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger Menu</title>
+    <style>
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --accent:#6ee7b7;
+            --accent2:#7c6cff;
+            --muted:#9aa4b2;
+            --glass: rgba(255,255,255,0.04);
+            --radius:14px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: 
+                radial-gradient(800px 600px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+                radial-gradient(500px 400px at 90% 90%, rgba(124,108,255,0.04), transparent 10%),
+                var(--bg);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e6eef6;
+        }
+
+        .container {
+            width: 380px;
+            background: var(--card);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 6px;
+            font-size: 24px;
+        }
+
+        .username {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        form {
+            margin-bottom: 12px;
+        }
+
+        .menu-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #052018;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(124,108,255,0.15);
+            transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(124,108,255,0.25);
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #e53935, #b71c1c);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(255,50,50,0.2);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(255,50,50,0.3);
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                width: 90%;
+                padding: 28px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Metro Passenger Menu</h2>
+        <p class="username">Welcome, <b>{{ username }}</b></p>
+
+        <form action="{% url 'add_balance' %}">
+            <button class="menu-btn">💳 Add Money</button>
+        </form>
+
+        <form action="{% url 'book_ticket' %}">
+            <button class="menu-btn">🎫 Book a Ticket</button>
+        </form>
+
+        <form action="{% url 'view' %}">
+            <button class="menu-btn">🎫 View Tickets</button>
+        </form>
+
+        <!-- <form action="{% url 'scan' %}">
+            <button class="menu-btn">📷 Scan Tickets</button>
+        </form> -->
+
+        <form action="{% url 'logout' %}">
+            <button class="menu-btn logout-btn">🚪 Logout</button>
+        </form>
+    </div>
+
+</body>
+</html>

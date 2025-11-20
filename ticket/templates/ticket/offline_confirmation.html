@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Confirmation</title>
+    <style>
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --accent:#6ee7b7;
+            --accent2:#7c6cff;
+            --success:#22c55e;
+            --muted:#9aa4b2;
+            --glass: rgba(255,255,255,0.04);
+            --radius:14px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(800px 600px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+                radial-gradient(500px 400px at 90% 90%, rgba(124,108,255,0.04), transparent 10%),
+                var(--bg);
+            color: #e6eef6;
+        }
+
+        .container {
+            width: 380px;
+            background: var(--card);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 16px;
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #e6eef6;
+        }
+
+        .fare {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--success);
+            margin-top: 12px;
+        }
+
+        a, .back-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(124,108,255,0.15);
+            transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+        }
+
+        a {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #052018;
+        }
+
+        a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(124,108,255,0.25);
+        }
+
+        .back-btn {
+            background: #555;
+            color: #fff;
+            border: none;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px);
+            background: #333;
+        }
+
+        @media (max-width: 420px) {
+            .container { width: 90%; padding:28px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>✅ Ticket Confirmed</h2>
+
+        <p><b>Username:</b> {{ username }}</p>
+        <p><b>From:</b> {{ origin_station }}</p>
+        <p><b>To:</b> {{ destination_station }}</p>
+        <p><b>Ticket ID:</b> {{ ticket_id }}</p>
+        <p class="fare">Fare: ₹{{ fare }}</p>
+
+        <a href="/ticket/book/">🎫 Book Another Ticket</a>
+
+        <form action="{% url 'offline-confirmation' %}">
+            <button class="back-btn">⬅ Back to Menu</button>
+        </form>
+    </div>
+
+</body>
+</html>

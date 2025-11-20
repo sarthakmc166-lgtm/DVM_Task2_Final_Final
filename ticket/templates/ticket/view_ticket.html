@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Tickets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fc;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            width: 650px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #f0f3fa;
+        }
+
+        .used {
+            color: red;
+            font-weight: bold;
+        }
+
+        .unused {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Your Tickets</h2>
+
+    <table>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Fare</th>
+            <th>Status</th>
+        </tr>
+
+        {% for t in tickets %}
+        <tr>
+            <td>{{ t.ticket_id }}</td>
+            <td>{{ t.origin_station }}</td>
+            <td>{{ t.destination_station }}</td>
+            <td>{{ t.fare }} ₹</td>
+            <td>{{t.ticket_status}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
