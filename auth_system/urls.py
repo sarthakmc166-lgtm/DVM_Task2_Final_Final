@@ -23,7 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
-    path('', views.logout_view, name='logout'),
     path('ticket/book/', ticket_views.book_ticket, name='book_ticket'),
     path('menu/', ticket_views.menu, name='menu'),
     path('menu/add/', ticket_views.add_balance, name='add_balance'),
@@ -36,7 +35,6 @@ urlpatterns = [
     path('staff-login/', views.staff_login, name='staff_login'),
     path('post-login/', views.post_login, name = 'pre-menu'),
     path('offline-ticket/', ticket_views.offline_ticket_booking, name='offline-ticket'),
-    path('offline-confirmation/', ticket_views.offline_confirmation, name='offline-confirmation')
-
+    path('offline-confirmation/', ticket_views.offline_confirmation, name='offline-confirmation'),
 
 ]

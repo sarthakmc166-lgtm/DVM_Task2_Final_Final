@@ -54,7 +54,7 @@ def book_ticket(request):
         else :
             stations_line_4 = MetroStation.objects.none() 
         stations = stations_line_1 | stations_line_2 | stations_line_3 | stations_line_4
-        print("status=true")
+        #print("status=true")
         user_name = request.user.username
 
         if request.method == 'POST':
@@ -82,7 +82,7 @@ def book_ticket(request):
             ticket_id = uuid.uuid4().hex[:8]
             time_stamp = timezone.now()
             balance = Balance.objects.filter(username=user_name).first().balance
-            print(balance)
+            #print(balance)
             if balance < fare:
                     messages.error(request, "Insufficient balance. Please add money to your account.")
                     return redirect('add_balance')
@@ -94,8 +94,8 @@ def book_ticket(request):
                     # Generate OTP and send email
                     otp_org = str(random.randint(100000, 999999))
                     time1 = timezone.now()
-                    print(ticket_id)
-                    print(otp_org)
+                    #print(ticket_id)
+                    #print(otp_org)
                     subject = 'Your Ticket OTP'
                     message = f'Your OTP is {otp_org}. It will expire in 3 minutes.'
                     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [request.user.email])
@@ -121,7 +121,7 @@ def offline_ticket_booking(request) :
     if status == True :
         stations = MetroStation.objects.all()
         connections = load_connections()
-        print("status=true")
+        #print("status=true")
         user_name = request.user.username
 
         if request.method == 'POST':
@@ -249,7 +249,6 @@ def view_ticket(request):
         user_name = request.user.username
         users = Database.objects.filter(username = user_name).all()
         return render (request, 'ticket/view_ticket.html', {'tickets':users})
-        # return render (request, 'ticket/view_ticket.html')
     else :
         return render(request, 'ticket/down.html')
 
@@ -258,34 +257,27 @@ def down(request):
 
 def otp_verification(request, ticket_id):
     otp_record = OTP_Verification.objects.filter(ticket_id=ticket_id).last()
-    print(otp_record)
+    #print(otp_record)
     if not otp_record:
         messages.error(request, "OTP record not found. Please book ticket again.")
         return redirect('book_ticket')
 
     if request.method == "POST":
-        print("otp")
+        #print("otp")
         otp_user = request.POST.get('otp_user')
-        print("OTP ENTERED BY USER =>", repr(otp_user))
         time2 = timezone.now()
-        print("otp2")
-        # Check OTP expiration
+        #print("otp2")
         if time2 > otp_record.time_at_otp_generated + datetime.timedelta(minutes=3):
             print("expired")
             messages.error(request, "OTP Expired")
             return render(request, 'ticket/otp_verification.html', {'ticket_id': ticket_id})
 
-        # Check OTP match
-        print("tried")
-        otp_org = otp_record.otp_generated
-        print("OTP STORED IN DB   =>", repr(otp_org))
-        print("USER TYPE  =>", type(otp_user))
-        print("DB TYPE    =>", type(otp_org))
+        #print("tried")
+        otp_org = otp_record.otp_generate
         if otp_user == otp_org:
             messages.success(request, "Verification Successful")
-            print("success")
+            #print("success")
 
-            # Create the ticket in Database
             Database.objects.create(
                 username=request.user.username,
                 origin_station=MetroStation.objects.get(id=otp_record.origin_station_id).station_name,
