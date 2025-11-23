@@ -79,42 +79,54 @@ def book_ticket(request):
                     return min(paths,key=len)
             route = path_finder(origin_station,destination_station)
             fare = (len(route)-1) * 10
-            ticket_id = uuid.uuid4().hex[:8]
-            time_stamp = timezone.now()
-            balance = Balance.objects.filter(username=user_name).first().balance
-            #print(balance)
-            if balance < fare:
-                    messages.error(request, "Insufficient balance. Please add money to your account.")
-                    return redirect('add_balance')
-
-            elif balance >= fare:
-                    balance -= fare
-                    Balance.objects.filter(username=user_name).update(balance=balance)
-
-                    # Generate OTP and send email
-                    otp_org = str(random.randint(100000, 999999))
-                    time1 = timezone.now()
-                    #print(ticket_id)
-                    #print(otp_org)
-                    subject = 'Your Ticket OTP'
-                    message = f'Your OTP is {otp_org}. It will expire in 3 minutes.'
-                    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [request.user.email])
-                    OTP_Verification.objects.create(
-                        ticket_id=ticket_id,
-                        otp_generated=otp_org,
-                        time_at_otp_generated=time1,
-                        origin_station_id=origin_id,
-                        destination_station_id=destination_id,
-                        fare=fare
-                    )
-
-                    # Redirect to OTP verification page
-                    return redirect('otp_verification', ticket_id=ticket_id)
-
+            return render(request, 'ticket/ticket_confirmation.html', {
+                "origin": origin_station,
+                "destination": destination_station,
+                "route": route,
+                "fare": fare,
+                "origin_id": origin_id,
+                "destination_id": destination_id,
+                "payment_mode": payment_mode
+            })
         return render(request, 'ticket/book.html', {'stations': stations, 'username': user_name})
     else:
         return render(request, 'ticket/down.html')
     
+def ticket_confirmation(request) :
+    if request.method == "POST" :
+        user_name = request.user.username
+        origin_id = request.POST.get("origin_id")
+        destination_id = request.POST.get("destination_id")
+        fare = int(request.POST.get("fare"))
+        balance = Balance.objects.filter(username=user_name).first().balance
+            #print(balance)
+        if balance < fare:
+            messages.error(request, "Insufficient balance. Please add money to your account.")
+            return redirect('add_balance')
+
+        elif balance >= fare:
+            balance -= fare
+            Balance.objects.filter(username=user_name).update(balance=balance)
+
+            ticket_id = uuid.uuid4().hex[:8]
+            otp_org = str(random.randint(100000, 999999))
+            time1 = timezone.now()
+            #print(ticket_id)
+            #print(otp_org)
+            subject = 'Your Ticket OTP'
+            message = f'Your OTP is {otp_org}. It will expire in 3 minutes.'
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [request.user.email])
+            OTP_Verification.objects.create(
+                ticket_id=ticket_id,
+                otp_generated=otp_org,
+                time_at_otp_generated=time1,
+                origin_station_id=origin_id,
+                destination_station_id=destination_id,
+                fare=fare
+            )
+            return redirect('otp_verification', ticket_id=ticket_id)
+        return redirect('book_ticket')
+
 def offline_ticket_booking(request) :
     system = SystemToggle.objects.first()
     status = system.book_status

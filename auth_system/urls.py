@@ -36,5 +36,5 @@ urlpatterns = [
     path('post-login/', views.post_login, name = 'pre-menu'),
     path('offline-ticket/', ticket_views.offline_ticket_booking, name='offline-ticket'),
     path('offline-confirmation/', ticket_views.offline_confirmation, name='offline-confirmation'),
-
+    path('ticket/confirm/', views.confirm_ticket, name='confirm_ticket'),
 ]
