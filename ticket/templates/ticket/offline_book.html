@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Ticket</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d0f15;
+            color: #e6e6e6;
+
+            /* 🔥 Centering UI Panel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 420px;
+            background: #151923;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.55);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #7ab8ff;
+            margin-top: 0;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+            color: #a8b6d1;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #2a3244;
+            background: #1e2433;
+            color: #dce6ff;
+            font-size: 15px;
+        }
+
+        .styled-dropdown {
+            border: 1px solid #4a76ff;
+        }
+
+        .styled-dropdown option {
+            background: #11131a;
+            color: #e6e6e6;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #4a76ff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2f5dff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Book Your Ticket</h2>
+    <p style="text-align:center;">Logged in as <strong style="color:#a0c4ff;">{{ username }}</strong></p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Origin Station</label>
+        <select name="origin_station" required class="styled-dropdown">
+            <option value="" disabled selected>Select Origin</option>
+            {% for s in stations %}
+                <option value="{{ s.id }}">{{ s.station_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Destination Station</label>
+        <select name="destination_station" required class="styled-dropdown">
+            <option value="" disabled selected>Select Destination</option>
+            {% for s in stations %}
+                <option value="{{ s.id }}">{{ s.station_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Payment Mode</label>
+        <select name="payment_mode" required class="styled-dropdown">
+            <option value="" disabled selected>Select Payment Mode</option>
+            <option value="Cash">Cash</option>
+        </select>
+
+        <button type="submit">Book Ticket</button>
+    </form>
+</div>
+
+</body>
+</html>

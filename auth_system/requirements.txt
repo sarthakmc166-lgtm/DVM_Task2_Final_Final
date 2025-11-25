@@ -1,0 +1,12 @@
+Django>=4.2
+psycopg2-binary
+gunicorn
+
+# Authentication + Social login
+django-allauth
+requests
+python3-openid
+oauthlib
+PyJWT
+cryptography
+requests

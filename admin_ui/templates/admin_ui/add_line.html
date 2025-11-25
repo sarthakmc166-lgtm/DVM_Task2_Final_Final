@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Metro Line</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .back-btn {
+            padding: 10px 18px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            width: 350px;
+            border-radius: 12px;
+            margin: 30px auto;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 15px;
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="/line/" class="back-btn">⬅ Back</a>
+
+    <div class="form-box">
+        <h2>Add New Metro Line</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Line Number</label>
+            <input type="number" name="line_number" required>
+
+            <button type="submit">Add Line</button>
+        </form>
+    </div>
+
+</body>
+</html>

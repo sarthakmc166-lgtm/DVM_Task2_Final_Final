@@ -1,0 +1,275 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Passenger Login</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#6ee7b7;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(800px 600px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+        radial-gradient(500px 400px at 90% 90%, rgba(99,102,241,0.04), transparent 10%),
+        var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:980px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:center;
+    }
+
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:36px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      min-height:420px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
+    }
+    .logo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+    .logo svg{width:46px;height:46px;border-radius:10px;padding:8px;background:linear-gradient(135deg,var(--accent),#7c6cff);box-shadow:0 6px 18px rgba(124,108,255,0.12);}
+    .hero h1{margin:0;font-size:26px}
+    .hero p{margin:0;color:var(--muted);line-height:1.5}
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:18px;
+      padding:28px;
+      box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      min-height:420px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      justify-content:center;
+    }
+
+    .card h2{margin:0 0 6px 0}
+    .card p.lead{margin:0;color:var(--muted);font-size:14px}
+
+    form{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    label{
+      font-size:13px;
+      color:var(--muted);
+    }
+    input[type="text"], input[type="password"]{
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.04);
+      background:var(--glass);
+      color:inherit;
+      outline:none;
+      font-size:15px;
+      transition:box-shadow .18s, transform .12s;
+    }
+    input:focus{
+      box-shadow: 0 6px 18px rgba(110,231,183,0.06);
+      transform:translateY(-1px);
+      border-color: rgba(110,231,183,0.24);
+    }
+
+    .password-row{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+    .toggle-pass{
+      position:absolute;
+      right:10px;
+      background:none;
+      border:none;
+      padding:6px;
+      cursor:pointer;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .controls{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:4px;
+    }
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .btn{
+      margin-top:6px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:0;
+      font-weight:600;
+      cursor:pointer;
+      font-size:15px;
+      background:linear-gradient(90deg,var(--accent),#7c6cff);
+      color:#052018;
+      box-shadow: 0 10px 30px rgba(124,108,255,0.12);
+      transition:transform .12s, box-shadow .12s, opacity .12s;
+    }
+    .btn:active{transform:translateY(1px)}
+    .alt{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .social{
+      display:flex;
+      gap:10px;
+    }
+    .social button{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+      background:transparent;
+      color:var(--muted);
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .foot{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+
+    .error{
+      color:#ffb4b4;
+      font-size:13px;
+    }
+
+    @media (max-width:920px){
+      .wrap{grid-template-columns:1fr;max-width:720px}
+      .hero{order:2}
+      .card{order:1}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-labelledby="title">
+    <section class="hero" aria-hidden="false">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="metro icon">
+          <rect width="24" height="24" rx="6" fill="white" opacity="0.06"/>
+          <path d="M6 15V9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v6" stroke="white" stroke-opacity="0.95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8.5" cy="11.5" r="0.9" fill="white"/>
+          <circle cx="15" cy="11.5" r="0.9" fill="white"/>
+        </svg>
+        MetroPassenger
+      </div>
+      <h1 id="title">Welcome back — safe journeys start here</h1>
+
+      <p>Login to purchase your ticket, view journeys, and scan boarding passes.</p>
+    </section>
+
+    <section class="card" aria-labelledby="form-title">
+      <div>
+        <h2 id="form-title">Passenger Login</h2>
+        <p class="lead">Enter your username and password to continue</p>
+      </div>
+
+      <!-- Updated form to use POST -->
+      <form id="loginForm" method="POST" action="/login/">
+        <!-- Django CSRF token placeholder -->
+        {% csrf_token %}
+
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" inputmode="text" autocomplete="username"
+            placeholder="jane.doe@example.com" required aria-required="true" />
+          <div id="userError" class="error" aria-live="polite" style="display:none"></div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-row">
+            <input id="password" name="password" type="password" autocomplete="current-password"
+              placeholder="At least 8 characters" minlength="6" required aria-required="true" style="width:100%"/>
+            <button type="button" class="toggle-pass" id="togglePass" aria-label="Show password" title="Show password">
+              👁
+            </button>
+          </div>
+          <div id="passError" class="error" aria-live="polite" style="display:none"></div>
+        </div>
+
+        <button class="btn" type="submit">Sign in</button>
+
+        
+
+
+      
+
+        <div class="foot">
+          New passenger? <a href="#" style="color:var(--accent);text-decoration:none;font-weight:700">Create an account</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Toggle password visibility
+    const passInput = document.getElementById('password');
+    const toggle = document.getElementById('togglePass');
+    let shown = false;
+    toggle.addEventListener('click', () => {
+      shown = !shown;
+      passInput.type = shown ? 'text' : 'password';
+      toggle.textContent = shown ? '🙈' : '👁';
+      toggle.setAttribute('aria-label', shown ? 'Hide password' : 'Show password');
+    });
+  </script>
+</body>
+</html>

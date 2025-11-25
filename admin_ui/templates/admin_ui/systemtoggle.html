@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System Toggles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-menu {
+            padding: 10px 18px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .toggle-box {
+            margin-top: 30px;
+        }
+
+        .toggle-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 7px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-on { color: green; font-weight: bold; }
+        .status-off { color: red; font-weight: bold; }
+
+        .toggle-btn {
+            padding: 8px 14px;
+            background: #ff9800;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <h1>System Toggles</h1>
+        <a href="/admin-menu/" class="btn-menu">⬅ Back to Menu</a>
+    </div>
+
+    <div class="toggle-box">
+
+        <h2>Manage Toggles</h2>
+
+        <!-- 1. Status -->
+        <div class="toggle-item">
+            <div>
+                <strong>Main System Status:</strong>
+                {% if toggle.status %}
+                    <span class="status-on">ON</span>
+                {% else %}
+                    <span class="status-off">OFF</span>
+                {% endif %}
+            </div>
+            <a href="/toggle-system/status/" class="toggle-btn">
+                Toggle
+            </a>
+        </div>
+
+        <!-- 2. Booking -->
+        <div class="toggle-item">
+            <div>
+                <strong>Booking:</strong>
+                {% if toggle.book_status %}
+                    <span class="status-on">Enabled</span>
+                {% else %}
+                    <span class="status-off">Disabled</span>
+                {% endif %}
+            </div>
+            <a href="/toggle-system/book/" class="toggle-btn">
+                Toggle
+            </a>
+        </div>
+
+        <!-- 3. Viewing -->
+        <div class="toggle-item">
+            <div>
+                <strong>View Tickets:</strong>
+                {% if toggle.view_status %}
+                    <span class="status-on">Enabled</span>
+                {% else %}
+                    <span class="status-off">Disabled</span>
+                {% endif %}
+            </div>
+            <a href="/toggle-system/view/" class="toggle-btn">
+                Toggle
+            </a>
+        </div>
+
+        <!-- 4. Balance -->
+        <div class="toggle-item">
+            <div>
+                <strong>Balance Check:</strong>
+                {% if toggle.balance_status %}
+                    <span class="status-on">Enabled</span>
+                {% else %}
+                    <span class="status-off">Disabled</span>
+                {% endif %}
+            </div>
+            <a href="/toggle-system/balance/" class="toggle-btn">
+                Toggle
+            </a>
+        </div>
+
+        <!-- 5. Scanner -->
+        <div class="toggle-item">
+            <div>
+                <strong>Scanning:</strong>
+                {% if toggle.scan_status %}
+                    <span class="status-on">Enabled</span>
+                {% else %}
+                    <span class="status-off">Disabled</span>
+                {% endif %}
+            </div>
+            <a href="/toggle-system/scan/" class="toggle-btn">
+                Toggle
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

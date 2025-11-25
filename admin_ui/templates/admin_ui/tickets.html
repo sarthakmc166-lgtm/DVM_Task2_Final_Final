@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Tickets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-menu {
+            padding: 10px 18px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .ticket-box {
+            margin-top: 30px;
+        }
+
+        .ticket-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .status-used {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-notused {
+            color: red;
+            font-weight: bold;
+        }
+
+        small {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <h1>All Tickets</h1>
+        <a href="/admin-menu/" class="btn-menu">⬅ Back to Menu</a>
+    </div>
+
+    <div class="ticket-box">
+        <h2>Ticket List</h2>
+
+        {% for t in tickets %}
+        <div class="ticket-item">
+
+            <strong>Ticket ID:</strong> {{ t.ticket_id }} <br>
+            <strong>User:</strong> {{ t.user.username }} <br><br>
+
+            <strong>Route:</strong> 
+            {{ t.origin_station.station_name }} → {{ t.destination_station.station_name }} <br>
+
+            <strong>Fare:</strong> ₹{{ t.fare }} <br><br>
+
+            <strong>Status:</strong> {{ t.ticket_status }}
+            <br>
+
+
+            <small>
+                Origin Scanned: {{ t.origin_scanned }} |
+                Destination Scanned: {{ t.destination_scanned }}
+            </small>
+            <br>
+
+            <small>Timestamp: {{ t.timestamp }}</small>
+
+        </div>
+        {% empty %}
+            <p>No tickets found.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metro Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f4f8;
+        }
+        .navbar {
+            background: #007bff;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">Metro Admin Dashboard</div>
+
+    <div class="container">
+        <div class="card"><a href="/line/">Metro Lines</a></div>
+        <div class="card"><a href="/metrostation/">Metro Stations</a></div>
+        <div class="card"><a href="/stationconnections/">Station Connection</a></div>
+        <div class="card"><a href="/view-tickets/">View Tickets</a></div>
+        <div class="card"><a href="/footfall/">View Footfall</a></div>
+        <div class="card"><a href="/system-toggles/">System Toggles</a></div>
+    </div>
+
+</body>
+</html>

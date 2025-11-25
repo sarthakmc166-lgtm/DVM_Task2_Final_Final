@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Lines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn-menu { background: #007bff; }
+        .btn-add { background: #28a745; margin-left: 10px; }
+
+        h1 { color: #333; }
+
+        .line-box {
+            margin-top: 30px;
+        }
+
+        .line-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 7px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-active { color: green; font-weight: bold; }
+        .status-inactive { color: red; font-weight: bold; }
+
+        .toggle-btn {
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: white;
+            background: #ff9800;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <h1>Metro Lines</h1>
+
+        <div>
+            <a href="/admin-menu/" class="btn btn-menu">⬅ Back to Menu</a>
+            <a href="/add-line/" class="btn btn-add">➕ Add New Line</a>
+            
+        </div>
+    </div>
+
+    <div class="line-box">
+        <h2>Existing Lines</h2>
+
+        {% for line in lines %}
+        <div class="line-item">
+    <div>
+        <b>Line {{ line.line_number }}</b> — 
+        {% if line.is_active %}
+            <span class="active">Active</span>
+        {% else %}
+            <span class="inactive">Inactive</span>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="/toggle-line/{{ line.id }}/" class="toggle-btn">
+            {% if line.is_active %}Deactivate{% else %}Activate{% endif %}
+        </a>
+
+        <a href="/delete-line/{{ line.id }}/" 
+           style="padding: 8px 12px; background:#dc3545; color:white; border-radius:6px; text-decoration:none; margin-left:10px;">
+           Delete
+        </a>
+    </div>
+</div>
+
+        {% empty %}
+            <p>No lines found.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
